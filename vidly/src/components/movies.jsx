@@ -9,6 +9,7 @@ import { paginate } from "../utils/paginate";
 class Movies extends React.Component {
   state = {
     movies: [],
+
     genres: [],
     pageSize: 4,
     currentPage: 1,
@@ -41,9 +42,7 @@ class Movies extends React.Component {
     this.setState({ sortColumn });
   };
 
-  render() {
-    const { length: count } = this.state.movies;
-
+  getPageData = () => {
     const {
       pageSize,
       currentPage,
@@ -52,7 +51,6 @@ class Movies extends React.Component {
       sortColumn,
     } = this.state;
 
-    if (count === 0) return <p> There are no Movies</p>;
     const filtered =
       selectedGenre && selectedGenre._id
         ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
@@ -61,6 +59,17 @@ class Movies extends React.Component {
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
     const movies = paginate(sorted, currentPage, pageSize);
+    return { totalCount: filtered.lengh, data: movies };
+  };
+
+  render() {
+    const { length: count } = this.state.movies;
+
+    const { pageSize, currentPage, selectedGenre, sortColumn } = this.state;
+
+    if (count === 0) return <p> There are no Movies</p>;
+    const { totalcount, data: movies } = this.getPageData();
+
     return (
       <div className="row">
         <div className="col-2">
@@ -71,7 +80,7 @@ class Movies extends React.Component {
           />
         </div>
         <div className="col">
-          <p> Showing {filtered.length} movies in database </p>
+          <p> Showing {totalcount} movies in database </p>
           <MoviesTable
             movies={movies}
             sortColumn={sortColumn}
@@ -80,7 +89,7 @@ class Movies extends React.Component {
             onSort={this.handleSort}
           />
           <Pagination
-            itemsCount={filtered.length}
+            itemsCount={totalcount}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
