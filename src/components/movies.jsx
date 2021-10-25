@@ -71,7 +71,7 @@ class Movies extends React.Component {
     const { totalCount, data: movies } = this.getPageData();
 
     return (
-      <div className="row">
+      <div className="row mt-5">
         <div className="col-2">
           <ListGroup
             items={this.state.genres}
@@ -80,7 +80,7 @@ class Movies extends React.Component {
           />
         </div>
         <div className="col">
-          <p> Showing {totalCount} movies in database </p>
+          <p className="mt-3"> Showing {totalCount} movies in database </p>
           <MoviesTable
             movies={movies}
             sortColumn={sortColumn}
