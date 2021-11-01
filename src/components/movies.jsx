@@ -6,10 +6,11 @@ import { getGenres } from "../services/fakeGenreService";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import { paginate } from "../utils/paginate";
+import { Link } from "react-router-dom";
+
 class Movies extends React.Component {
   state = {
     movies: [],
-
     genres: [],
     pageSize: 4,
     currentPage: 1,
@@ -79,7 +80,10 @@ class Movies extends React.Component {
             onItemSelect={this.handleGenreSelect}
           />
         </div>
-        <div className="col">
+        <div className="col"> <Link to="/movies/new" 
+        style={{ marginBottom:20}}>
+          New Movie
+         </Link>
           <p className="mt-3"> Showing {totalCount} movies in database </p>
           <MoviesTable
             movies={movies}
