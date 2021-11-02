@@ -1,8 +1,10 @@
 import React from "react";
 import MoviesTable from "./moviesTable";
+import { toast } from "react-toastify";
 import _ from "lodash";
-import { getMovies } from "../services/fakeMovieService";
-import { getGenres } from "../services/fakeGenreService";
+import { getMovies, deleteMovie } from "../services/movieService";
+// import { getMovies, deleteMovie } from "../services/fakeMovieService";
+import { getGenres } from "../services/genreService";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import { paginate } from "../utils/paginate";
@@ -16,9 +18,13 @@ class Movies extends React.Component {
     currentPage: 1,
     sortColumn: { path: "title", order: "asc" },
   };
-  componentDidMount() {
-    const genres = [{ name: "All Genres", _id: "" }, ...getGenres()];
-    this.setState({ genres, movies: getMovies() });
+  async componentDidMount() {
+    const { data } = await getGenres();
+    const genres = [{ name: "All Genres", _id: "" }, ...data];
+
+    const { data: movies } = await getMovies();
+
+    this.setState({ genres, movies });
   }
 
   handleLike = (movie) => {
@@ -28,9 +34,17 @@ class Movies extends React.Component {
     movies[index].liked = !movies[index].liked;
     this.setState({ movies });
   };
-  handleDelete = (movie) => {
-    const movies = this.state.movies.filter((m) => m._id !== movie._id);
+  handleDelete = async (movie) => {
+    const originalMovies = this.state.movies;
+    const movies = originalMovies.filter((m) => m._id !== movie._id);
     this.setState({ movies });
+    try {
+      await deleteMovie(movie._id);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        toast("This Movise already been deleted");
+      this.setState({ movies: originalMovies });
+    }
   };
 
   handlePageChange = (page) => {
@@ -80,10 +94,11 @@ class Movies extends React.Component {
             onItemSelect={this.handleGenreSelect}
           />
         </div>
-        <div className="col"> <Link to="/movies/new" 
-        style={{ marginBottom:20}}>
-          New Movie
-         </Link>
+        <div className="col">
+          {" "}
+          <Link to="/movies/new" style={{ marginBottom: 20 }}>
+            New Movie
+          </Link>
           <p className="mt-3"> Showing {totalCount} movies in database </p>
           <MoviesTable
             movies={movies}
