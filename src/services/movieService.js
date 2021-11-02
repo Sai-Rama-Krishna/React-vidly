@@ -8,7 +8,7 @@ export async function getMovies() {
   return await  http.get(url);
 }
 export function getMovie(movieId) {
-  return http.get(url + "/" + movieId + "s");
+  return http.get(url + "/" + movieId );
 }
 
 export  async function saveMovie(movie) {
