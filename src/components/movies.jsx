@@ -81,7 +81,7 @@ class Movies extends React.Component {
     const { length: count } = this.state.movies;
 
     const { pageSize, currentPage, selectedGenre, sortColumn } = this.state;
-
+    const { user } = this.props;
     if (count === 0) return <p> There are no Movies</p>;
     const { totalCount, data: movies } = this.getPageData();
 
@@ -95,10 +95,12 @@ class Movies extends React.Component {
           />
         </div>
         <div className="col">
-          {" "}
-          <Link to="/movies/new" style={{ marginBottom: 20 }}>
-            New Movie
-          </Link>
+          {user && (
+            <Link to="/movies/new" style={{ marginBottom: 20 }}>
+              New Movie
+            </Link>
+          )}
+
           <p className="mt-3"> Showing {totalCount} movies in database </p>
           <MoviesTable
             movies={movies}
