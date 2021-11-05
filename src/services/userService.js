@@ -2,7 +2,7 @@ import { apiUrl } from "../config.json";
 
 import http from "./httpService";
 
-const url = apiUrl + "/users";
+const url =  "/users";
 
 export function register(user) {
   return http.post(url, {

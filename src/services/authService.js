@@ -1,8 +1,7 @@
-import { apiUrl } from "../config.json";
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
 
-const url = apiUrl + "/auth";
+const url =  "/auth";
 
 const tokenkey = "token";
 
