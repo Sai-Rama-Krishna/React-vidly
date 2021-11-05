@@ -1,7 +1,7 @@
 import React from "react";
 import auth from "../../services/authService";
 import { Route, Redirect } from "react-router-dom";
-import { render } from "@testing-library/react";
+
 
 const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
   return (
