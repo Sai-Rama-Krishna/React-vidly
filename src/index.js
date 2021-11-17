@@ -6,13 +6,17 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
+import store from './redux/store/index';
+import { Provider} from 'react-redux';
 
-console.log(process.env)
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+    <Provider store = { store}> 
       <App />
+      </Provider>
+      
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

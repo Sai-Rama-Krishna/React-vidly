@@ -3,8 +3,18 @@ import Like from "./common/like";
 import Table from "./common/table";
 import { Link } from "react-router-dom";
 import auth from "../services/authService";
+import loading from "./common/loading";
+import ReactLoading from "react-loading";
 
 class MoviesTable extends React.Component {
+  state = {
+    isLoading: null,
+  };
+
+  componentDidMount() {
+    this.setState({ isLoading: false });
+  }
+
   colums = [
     {
       path: "title",
@@ -39,19 +49,26 @@ class MoviesTable extends React.Component {
 
   constructor() {
     super();
+    this.state = { isLoading: true };
     const user = auth.getCurrentUser();
     if (user && user.isAdmin) this.colums.push(this.deleteColumn);
   }
   render() {
     const { movies, sortColumn, onSort } = this.props;
 
-    return (
-      <Table
-        colums={this.colums}
-        data={movies}
-        sortColumn={sortColumn}
-        onSort={onSort}
-      />
+    return this.state.isLoading ? (
+      <div>
+        <ReactLoading type="bars" color="#aaaa" height={"30%"} width={"30%"} />
+      </div>
+    ) : (
+      <div>
+        <Table
+          colums={this.colums}
+          data={movies}
+          sortColumn={sortColumn}
+          onSort={onSort}
+        />
+      </div>
     );
   }
 }

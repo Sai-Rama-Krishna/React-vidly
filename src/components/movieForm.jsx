@@ -1,8 +1,13 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
+import auth from "../services/authService";
 import { getMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
+import get_genres from "../redux/actions/genreslistAction";
+import get_movielist from "../redux/actions/movielistAction";
+import { connect } from "react-redux";
+import { Route, Redirect, Switch } from "react-router-dom";
 
 class MovieForm extends Form {
   state = {
@@ -33,15 +38,23 @@ class MovieForm extends Form {
 
   async populateGenre() {
     const { data: genres } = await getGenres();
-    this.setState({ genres });
+
+    // let rrr = (await this.props) && this.props.getgenrelist;
+    // const data = rrr.genres;
+
+    this.setState({ genres: genres });
   }
 
   async populateMovie() {
     try {
       const movieId = this.props.match.params.id;
-      if (movieId === "new") return;
-      const { data: movie } = await getMovie(movieId);
 
+      let ttt = await this.props.getmovielist;
+      const mvve = ttt.movies;
+
+      if (movieId === "new") return;
+      let movie = mvve.find((obj) => obj._id === movieId);
+      // const { data: movie } = await getMovie(movieId);
       this.setState({ data: this.mapToViewModel(movie) });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
@@ -49,8 +62,15 @@ class MovieForm extends Form {
     }
   }
   async componentDidMount() {
-    await this.populateGenre();
+    if (!this.props.getmovielist) {
+      await get_movielist();
+    }
+    if (!this.props.getgenrelist) {
+      const s = await get_genres();
+    }
+
     await this.populateMovie();
+    await this.populateGenre();
   }
   mapToViewModel(movie) {
     return {
@@ -64,9 +84,16 @@ class MovieForm extends Form {
 
   doSubmit = async () => {
     await saveMovie(this.state.data);
+
+    // await  get_movielist();
+
+    // this.setState({ movies });
     this.props.history.push("/movies");
   };
   render() {
+    const user = auth.getCurrentUser();
+    if (!user.isAdmin) return <Redirect to="/notfound" />;
+
     return (
       <div>
         <h1> MovieForm</h1>
@@ -96,4 +123,13 @@ class MovieForm extends Form {
 //   );
 // };
 
-export default MovieForm;
+const mapStateToProps = (state) => {
+  return {
+    getgenrelist: state.getgenrelist,
+    getmovielist: state.getmovielist,
+
+    //  entities : state.entities
+  };
+};
+
+export default connect(mapStateToProps)(MovieForm);
