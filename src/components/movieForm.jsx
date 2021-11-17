@@ -2,12 +2,12 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import auth from "../services/authService";
-import { getMovie, saveMovie } from "../services/movieService";
+import { saveMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 import get_genres from "../redux/actions/genreslistAction";
 import get_movielist from "../redux/actions/movielistAction";
 import { connect } from "react-redux";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class MovieForm extends Form {
   state = {
@@ -66,7 +66,7 @@ class MovieForm extends Form {
       await get_movielist();
     }
     if (!this.props.getgenrelist) {
-      const s = await get_genres();
+      await get_genres();
     }
 
     await this.populateMovie();

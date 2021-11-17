@@ -1,9 +1,9 @@
 import React from "react";
 import _ from "lodash";
-import UserTable from "./usersTable";
-import Pagination from "./common/pagination";
-import { paginate } from "../utils/paginate";
-import { getCustomers } from "../services/customersService";
+// import UserTable from "./usersTable";
+// import Pagination from "./common/pagination";
+// import { paginate } from "../utils/paginate";
+// import { getCustomers } from "../services/customersService";
 import ReactLoading from "react-loading";
 import TableBody from "./common/tableBody";
 
@@ -35,7 +35,7 @@ class Customers extends React.Component {
 
   componentDidMount = async () => {
     if (!this.props.getcustomerslist) {
-      const dd = await get_customers();
+      await get_customers();
     }
 
     const ss = (await this.props) && this.props.getcustomerslist;
@@ -81,12 +81,11 @@ class Customers extends React.Component {
     const { customers, colums } = this.state;
 
     return (
-      <table class="table table-sm">
+      <table className="table table-striped">
         <thead>
           <tr>
             {colums.map((column) => (
               <th scope="col" key={column.path || column.key}>
-                {" "}
                 {column.label}
               </th>
             ))}
@@ -104,8 +103,8 @@ class Customers extends React.Component {
             <ReactLoading
               type="bars"
               color="#aaaa"
-              height={"50%"}
-              width={"50%"}
+              height={"20%"}
+              width={"20%"}
             />
           </div>
         ) : (

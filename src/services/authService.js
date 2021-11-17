@@ -1,11 +1,11 @@
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
 
-const url =  "/auth";
+const url = "/auth";
 
 const tokenkey = "token";
 
- http.setJwt(getJwt());
+http.setJwt(getJwt());
 
 export function getJwt() {
   return localStorage.getItem(tokenkey);
@@ -32,10 +32,10 @@ export function getCurrentUser() {
   }
 }
 
-export default {
+const log = {
   login,
   logout,
   getCurrentUser,
   loginWithjwt,
-  
 };
+export default log;

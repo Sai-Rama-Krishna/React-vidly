@@ -1,6 +1,6 @@
-import { apiUrl } from "../config.json";
+//import { apiUrl } from "../config.json";
 import get_movielist from "../redux/actions/movielistAction";
-import { add_movie } from "../redux/actions/movielistAction";
+//import { add_movie } from "../redux/actions/movielistAction";
 
 import http from "./httpService";
 

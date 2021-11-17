@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import entitiesReducer from "./entities";
+// import entitiesReducer from "./entities";
 import movieReducer from "./movieReducer";
 import genreReducer from "./genresReducer";
 import customersReducer from "./customersReducer";

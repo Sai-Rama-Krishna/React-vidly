@@ -2,22 +2,19 @@ import React from "react";
 import MoviesTable from "./moviesTable";
 import { toast } from "react-toastify";
 import _ from "lodash";
-import auth from "../services/authService";
-import { getMovies, deleteMovie } from "../services/movieService";
+// import auth from "../services/authService";
+import { deleteMovie } from "../services/movieService";
 // import { getMovies, deleteMovie } from "../services/fakeMovieService";
-import { getGenres } from "../services/genreService";
+// import { getGenres } from "../services/genreService";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import { paginate } from "../utils/paginate";
 import { Link } from "react-router-dom";
 import SearchBox from "./common/searchBox";
 import { connect } from "react-redux";
-import get_movielist, { add_movie } from "../redux/actions/movielistAction";
+import get_movielist from "../redux/actions/movielistAction";
 import get_genres from "../redux/actions/genreslistAction";
-import entities from "../redux/reducer/entities";
-import store from "../redux/store/index";
-import ReactLoading from "react-loading";
-import { Route, Redirect, Switch } from "react-router-dom";
+// import entities from "../redux/reducer/entities";
 
 class Movies extends React.Component {
   state = {
@@ -56,7 +53,7 @@ class Movies extends React.Component {
       await get_movielist();
     }
     if (!this.props.getgenrelist) {
-      const s = await get_genres();
+      await get_genres();
     }
 
     // this.unsubscribe = store.subscribe(async () => {
@@ -140,7 +137,7 @@ class Movies extends React.Component {
   };
 
   render() {
-    const { length: count, searchQuery } = this.state.movies;
+    const { searchQuery } = this.state.movies;
 
     const { pageSize, currentPage, selectedGenre, sortColumn } = this.state;
     const { user } = this.props;

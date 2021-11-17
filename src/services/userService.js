@@ -1,8 +1,8 @@
-import { apiUrl } from "../config.json";
+// import { apiUrl } from "../config.json";
 
 import http from "./httpService";
 
-const url =  "/users";
+const url = "/users";
 
 export function register(user) {
   return http.post(url, {

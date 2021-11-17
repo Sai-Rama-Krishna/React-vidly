@@ -3,7 +3,7 @@ import Like from "./common/like";
 import Table from "./common/table";
 import { Link } from "react-router-dom";
 import auth from "../services/authService";
-import loading from "./common/loading";
+// import loading from "./common/loading";
 import ReactLoading from "react-loading";
 
 class MoviesTable extends React.Component {

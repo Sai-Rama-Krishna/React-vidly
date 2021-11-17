@@ -1,13 +1,13 @@
 // import Raven from 'raven-js'
 
-function init(){ 
+function init() {}
 
+function log(error) {
+  console.error(error);
 }
 
-function log(error){ 
- console.error(error)
-}
-
-export default { 
-init,log
-}
+const tt = {
+  init,
+  log,
+};
+export default tt;
