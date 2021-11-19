@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
 
 class TableBody extends React.Component {
   state = {
@@ -26,17 +26,12 @@ class TableBody extends React.Component {
 
   render() {
     const { data, colums } = this.props;
-    return this.state.isLoading ? (
-      <div>
-        <ReactLoading type="bars" color="#aaaa" height={"30%"} width={"30%"} />
-      </div>
-    ) : (
+    return (
       <tbody>
         {data.map((item) => (
           <tr key={item._id}>
             {colums.map((column) => (
               <td key={this.createkey(item, column)}>
-                {" "}
                 {this.renderCell(item, column)}
               </td>
             ))}

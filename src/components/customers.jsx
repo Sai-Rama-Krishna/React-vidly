@@ -15,12 +15,12 @@ class Customers extends React.Component {
     if (column.content) return column.content(item);
     return _.get(item, column.path);
   };
-
   state = {
     customers: [],
     colums: [
       { path: "name", label: "Customer" },
       { path: "phone", label: "Phone No." },
+      { path: "gold", label: "Gold Membership" },
     ],
     pageSize: 4,
     currentPage: 1,
@@ -38,14 +38,16 @@ class Customers extends React.Component {
       await get_customers();
     }
 
-    const ss = (await this.props) && this.props.getcustomerslist;
+    const cus = (await this.props) && this.props.getcustomerslist;
     // console.log(ss);
     // if (!ss) this.setState({ customers: [] });
     // console.log(ss);
-    ss
-      ? await this.setState({ customers: ss.customers })
+    // console.log(cus);
+    cus
+      ? await this.setState({ customers: cus.customers })
       : this.setState({ customers: [] });
 
+    // this.setState({ customers: cus.customers });
     this.setState({ isLoading: false });
   }
 
@@ -81,16 +83,29 @@ class Customers extends React.Component {
     const { colums } = this.state;
 
     return (
-      <table className="table table-striped table-hover">
-        <thead>
-          <tr className="table-secondary">
-            {colums.map((column) => (
-              <th scope="col" key={column.path || column.key}>
-                {column.label}
-              </th>
+      <div>
+        <table className="table table-dark">
+          <thead>
+            <tr>
+              {colums.map((column) => (
+                <th key={column.path || column.key}>{column.label}</th>
+              ))}
+            </tr>
+          </thead>
+
+          {/* <TableBody colums={colums} data={customers} /> */}
+          <tbody>
+            {this.state.customers.map((item) => (
+              <tr key={item._id}>
+                {this.state.colums.map((column) => (
+                  <td key={this.createkey(item, column)}>
+                    {this.renderCell(item, column)}
+                  </td>
+                ))}
+              </tr>
             ))}
-          </tr>
-        </thead>
+          </tbody>
+        </table>
         {this.state.isLoading ? (
           <div
             style={{
@@ -103,29 +118,14 @@ class Customers extends React.Component {
             <ReactLoading
               type="bars"
               color="#aaaa"
-              height={"20%"}
-              width={"20%"}
+              height={"10%"}
+              width={"10%"}
             />
           </div>
         ) : (
           ""
         )}
-        {/* <TableBody colums={colums} data={customers} /> */}
-        <tbody>
-          {this.state.customers.map((item) => (
-            <tr key={item._id} className="table-secondary">
-              {this.state.colums.map((column) => (
-                <td
-                  key={this.createkey(item, column)}
-                  className="table-secondary"
-                >
-                  {this.renderCell(item, column)}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      </div>
       // <div className="row mt-5">
       //   <div className="col">
       //     <UserTable

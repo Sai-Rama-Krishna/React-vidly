@@ -19,11 +19,13 @@ class LoginForm extends Form {
     try {
       const { data } = this.state;
       const toas = await auth.login(data.username, data.password);
-      if (!toas) toast("Login successfully");
-      const { state } = this.props.location;
-      setTimeout(() => {
-        window.location = state ? state.from.pathname : "/";
-      }, 2000);
+      if (!toas) {
+        toast("Login successfully");
+        const { state } = this.props.location;
+        setTimeout(() => {
+          window.location = state ? state.from.pathname : "/";
+        }, 2000);
+      }
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };

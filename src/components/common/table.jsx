@@ -1,7 +1,7 @@
 import React from "react";
 import TableBody from "./tableBody";
 import TableHeader from "./tableheader";
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
 
 class Table extends React.Component {
   state = {
@@ -12,6 +12,9 @@ class Table extends React.Component {
     super();
     this.state.isLoading = true;
   }
+
+  handleloading = () => {};
+
   componentDidMount() {
     this.setState({ isLoading: false });
   }
@@ -26,25 +29,7 @@ class Table extends React.Component {
             sortColumn={sortColumn}
             onSort={onSort}
           />
-          {this.state.isLoading ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                // alignItems: "center",
-                height: "100vh",
-              }}
-            >
-              <ReactLoading
-                type="bars"
-                color="#aaaa"
-                height={"50%"}
-                width={"20%"}
-              />
-            </div>
-          ) : (
-            ""
-          )}
+
           <TableBody colums={colums} data={data} />
         </table>
       </div>

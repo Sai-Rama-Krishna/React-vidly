@@ -92,7 +92,7 @@ class MovieForm extends Form {
   };
   render() {
     const user = auth.getCurrentUser();
-    if (!user.isAdmin) return <Redirect to="/notfound" />;
+    if (!user.isAdmin) return <Redirect to="/movies" />;
 
     return (
       <div>

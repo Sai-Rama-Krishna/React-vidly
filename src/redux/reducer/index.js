@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import movieReducer from "./movieReducer";
 import genreReducer from "./genresReducer";
 import customersReducer from "./customersReducer";
+import usersReducer from "./usersReducer";
 
 export default function allReducers() {
   return combineReducers({
@@ -10,5 +11,6 @@ export default function allReducers() {
     getmovielist: movieReducer,
     getgenrelist: genreReducer,
     getcustomerslist: customersReducer,
+    getuserslist: usersReducer,
   });
 }

@@ -14,6 +14,7 @@ import auth from "./services/authService";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import RegisterForm from "./components/registerForm";
+import Users from "./components/users";
 
 class App extends React.Component {
   state = {};
@@ -34,11 +35,16 @@ class App extends React.Component {
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />
             <ProtectedRoute path="/movies/:id" component={MovieForm} />
-            <Route
+            <ProtectedRoute path="/movies/new" component={MovieForm} />
+            <ProtectedRoute
               path="/movies"
               render={(props) => <Movies {...props} user={this.state.user} />}
-            ></Route>
-            <Route path="/customers" component={Customers}></Route>
+            ></ProtectedRoute>
+            <Route path="/users" component={Users}></Route>
+            <ProtectedRoute
+              path="/customers"
+              component={Customers}
+            ></ProtectedRoute>
             <Route path="/rentals" component={Rentals}></Route>
             <Route path="/notfound" component={notFound}></Route>
             <Redirect from="/" exact to="/movies" />
