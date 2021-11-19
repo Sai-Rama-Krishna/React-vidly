@@ -40,12 +40,15 @@ class App extends React.Component {
               path="/movies"
               render={(props) => <Movies {...props} user={this.state.user} />}
             ></ProtectedRoute>
-            <Route path="/users" component={Users}></Route>
+            <ProtectedRoute path="/users" component={Users}></ProtectedRoute>
             <ProtectedRoute
               path="/customers"
               component={Customers}
             ></ProtectedRoute>
-            <Route path="/rentals" component={Rentals}></Route>
+            <ProtectedRoute
+              path="/rentals"
+              component={Rentals}
+            ></ProtectedRoute>
             <Route path="/notfound" component={notFound}></Route>
             <Redirect from="/" exact to="/movies" />
             <Redirect to="/notfound" />

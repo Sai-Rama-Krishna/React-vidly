@@ -4,6 +4,7 @@ import Form from "./common/form";
 import auth from "../services/authService";
 import { Redirect } from "react-router";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 class LoginForm extends Form {
   state = {
@@ -44,7 +45,15 @@ class LoginForm extends Form {
           {this.renderInput("username", "Username")}
           {this.renderInput("password", "Password", "password")}
           {this.renderButton("Login")}
-        </form>
+        </form>{" "}
+        <br />
+        <p> New User </p>{" "}
+        <span>
+          {" "}
+          <Link to="/register" style={{ marginBottom: 20 }}>
+            Register Here
+          </Link>{" "}
+        </span>
       </div>
     );
   }
