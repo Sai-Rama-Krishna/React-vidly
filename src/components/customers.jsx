@@ -5,7 +5,7 @@ import _ from "lodash";
 // import { paginate } from "../utils/paginate";
 // import { getCustomers } from "../services/customersService";
 import ReactLoading from "react-loading";
-import TableBody from "./common/tableBody";
+// import TableBody from "./common/tableBody";
 
 import get_customers from "../redux/actions/customerslistAction";
 import { connect } from "react-redux";
@@ -33,7 +33,7 @@ class Customers extends React.Component {
     this.state.isLoading = true;
   }
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     if (!this.props.getcustomerslist) {
       await get_customers();
     }
@@ -47,7 +47,7 @@ class Customers extends React.Component {
       : this.setState({ customers: [] });
 
     this.setState({ isLoading: false });
-  };
+  }
 
   // handlePageChange = (page) => {
   //   this.setState({ currentPage: page });
@@ -78,12 +78,12 @@ class Customers extends React.Component {
   render() {
     // const { pageSize, currentPage, sortColumn,customers } = this.state;
     // const { totalCount, data: customers } = this.getPageData();
-    const { customers, colums } = this.state;
+    const { colums } = this.state;
 
     return (
-      <table className="table table-striped">
+      <table className="table table-striped table-hover">
         <thead>
-          <tr>
+          <tr className="table-secondary">
             {colums.map((column) => (
               <th scope="col" key={column.path || column.key}>
                 {column.label}
@@ -110,18 +110,21 @@ class Customers extends React.Component {
         ) : (
           ""
         )}
-        <TableBody colums={colums} data={customers} />
-        {/* <tbody>
-          {customers.map((item) => (
-            <tr key={item._id}>
-              {this.colums.map((column) => (
-                <td key={this.createkey(item, column)}>
+        {/* <TableBody colums={colums} data={customers} /> */}
+        <tbody>
+          {this.state.customers.map((item) => (
+            <tr key={item._id} className="table-secondary">
+              {this.state.colums.map((column) => (
+                <td
+                  key={this.createkey(item, column)}
+                  className="table-secondary"
+                >
                   {this.renderCell(item, column)}
                 </td>
               ))}
             </tr>
           ))}
-        </tbody> */}
+        </tbody>
       </table>
       // <div className="row mt-5">
       //   <div className="col">

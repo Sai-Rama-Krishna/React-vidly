@@ -19,7 +19,7 @@ import get_genres from "../redux/actions/genreslistAction";
 class Movies extends React.Component {
   state = {
     movies: [],
-    genres: [{ _id: "", name: "All Genres" }],
+    genres: [],
     pageSize: 4,
     searchQuery: "",
     selectedGenre: null,
@@ -48,7 +48,7 @@ class Movies extends React.Component {
   //   this.unsubscribe();
   // }
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     if (!this.props.getmovielist) {
       await get_movielist();
     }
@@ -56,25 +56,20 @@ class Movies extends React.Component {
       await get_genres();
     }
 
+    const ss = (await this.props) && this.props.getgenrelist.genres;
+    const genres = [{ _id: "", name: "All Genres" }, ...ss];
+    const dd = await this.props.getmovielist;
+    await this.setState({ movies: dd.movies, genres });
+
     // this.unsubscribe = store.subscribe(async () => {
     //   // if (this.state.movies !== moviesInStore)
     // });
 
     // const { data } = await getGenres();
-
     // const stt = this.props;
     // console.log(stt);
-
-    const ss = (await this.props) && this.props.getgenrelist;
-
-    const genres = [...ss.genres];
-
     // const {data:movies} = await getMovies();
-
-    const dd = await this.props.getmovielist;
-
-    await this.setState({ movies: dd.movies, genres });
-  };
+  }
 
   handleLike = (movie) => {
     const movies = [...this.state.movies];

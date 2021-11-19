@@ -3,11 +3,12 @@ import Joi from "joi-browser";
 import Form from "./common/form";
 import auth from "../services/authService";
 import { Redirect } from "react-router";
+import { toast } from "react-toastify";
 
 class LoginForm extends Form {
   state = {
     data: { username: "", password: "" },
-    errors: { username:""},
+    errors: { username: "" },
   };
   schema = {
     username: Joi.string().required().label("Username"),
@@ -17,10 +18,12 @@ class LoginForm extends Form {
   doSubmit = async () => {
     try {
       const { data } = this.state;
-        await auth.login(data.username, data.password);
-         const {state} = this.props.location
-       window.location = state ? state.from.pathname : '/';
-       
+      const toas = await auth.login(data.username, data.password);
+      if (!toas) toast("Login successfully");
+      const { state } = this.props.location;
+      setTimeout(() => {
+        window.location = state ? state.from.pathname : "/";
+      }, 2000);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -31,7 +34,7 @@ class LoginForm extends Form {
   };
 
   render() {
-   if(auth.getCurrentUser()) return <Redirect to='/'/>;
+    if (auth.getCurrentUser()) return <Redirect to="/" />;
 
     return (
       <div>
