@@ -8,6 +8,7 @@ import get_genres from "../redux/actions/genreslistAction";
 import get_movielist from "../redux/actions/movielistAction";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
 class MovieForm extends Form {
   state = {
@@ -27,7 +28,7 @@ class MovieForm extends Form {
     numberInStock: Joi.number()
       .required()
       .min(0)
-      .max(100)
+      .max(10)
       .label("Number in Stock"),
     dailyRentalRate: Joi.number()
       .required()
@@ -83,12 +84,17 @@ class MovieForm extends Form {
   }
 
   doSubmit = async () => {
-    await saveMovie(this.state.data);
+    try {
+      
+      await saveMovie(this.state.data);
+      this.props.history.push("/movies");
+    } catch (error) {
+      toast.error(error?.response?.data,'error')
+    }
 
     // await  get_movielist();
 
     // this.setState({ movies });
-    this.props.history.push("/movies");
   };
   render() {
     const user = auth.getCurrentUser();

@@ -29,6 +29,7 @@ class MoviesTable extends React.Component {
 
     {
       key: "like",
+      label:'Like',
       content: (movie) => (
         <Like liked={movie.liked} onClick={() => this.props.onLike(movie)} />
       ),
@@ -37,6 +38,7 @@ class MoviesTable extends React.Component {
 
   deleteColumn = {
     key: " Delete",
+    label:'Action',
     content: (movie) => (
       <button
         className="btn btn-danger btn-sm"
